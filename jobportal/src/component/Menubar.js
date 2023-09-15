@@ -57,11 +57,11 @@ function  Menubar () {
             <Dropdown.Toggle variant="Secondary" id="dropdown-basic">
               <i style={{ fontSize: "20px" }} className="bi bi-person-circle"></i>
             </Dropdown.Toggle>
-            <Dropdown.Menu   className="Dropdowm_menu">
+            <Dropdown.Menu   className="Dropdowm_menu" >
               <Dropdown.Item   as={Link} to="/profile" >
                 Profile 
               </Dropdown.Item>
-              <Dropdown.Item  as={Link} to="/">
+              <Dropdown.Item  as={Link} to="/loginpage"   >
                  Logout
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -71,7 +71,7 @@ function  Menubar () {
         
         
 
-
+          
   
 
     

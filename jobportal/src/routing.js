@@ -13,14 +13,6 @@ const COMMON_ROUTES = [
     path: "/",
     element: <LoginPage />
   },
-  {
-    path: "/postajob",                // ye wala hatana hai
-    element: <Postajob />
-  },
-  {
-    path: "/postedjob",                    // ye wala hatana hai
-    element: <Postedjob />
-  },
 
   {
     path: "/Dashboard",
@@ -33,7 +25,12 @@ const COMMON_ROUTES = [
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path: "/loginpage",
+    element: <LoginPage/>
   }
+ 
 ];
 
 export const SEEKER_ROUTES = [

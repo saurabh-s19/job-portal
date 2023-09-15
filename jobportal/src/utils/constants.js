@@ -16,15 +16,8 @@ export const  SEEKER_MENU=[
     {
     path: "/appliedjob",
     name: "Applied Job"
-},
-    {
-    path: "/postajob",
-    name: "post a job"
-},
-    {
-    path: "/postedjob",
-    name: "posted job"
-},
+}
+   
 
 
 ]

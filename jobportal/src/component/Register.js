@@ -26,12 +26,12 @@ console.log("userExist" ,userExist);
     Navigate("/");
   }
  
-  useEffect(()=>{
-    if(doneRegister && userExist===false){
-      Navigate("/Dashboard");
-    }
+  // useEffect(()=>{
+  //   if(doneRegister && userExist===false){
+  //     Navigate("/Dashboard");
+  //   }
 
-  },[doneRegister , userExist]);
+  // },[doneRegister , userExist]);
   
   useEffect(()=>{
     if( userExist===true){
@@ -77,8 +77,9 @@ console.log("userExist" ,userExist);
       validationSchema={schema}
       onSubmit={
         (values, { setSubmitting }) => {
+          sessionStorage.setItem("mydata",values.emailId);
           dispatch(users(values));
-          
+          Navigate("/Dashboard");
         }}
 
         handleChange={

@@ -4,7 +4,7 @@ import { API_URL ,JOB_RECRUITER, JOB_SEEKER} from "../../utils/constants.js";
 
 const initialState = {
     user:[],
-    isvalidUser:"",
+    
     isLoading: false, 
     hasRecruiter:false,
     doneRegister:false,
@@ -13,6 +13,10 @@ const initialState = {
     firstName:"",
     LastName:"",
     companyName:""
+}
+
+const initialState1={
+    isvalidUser:"",
 }
 
 export const users = createAsyncThunk("users/create",async(params, thunkAPI)=>{
@@ -50,7 +54,8 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        // reset: ()=> initialState
+        reset: ()=> initialState,
+        resetisvalid:()=>initialState1,
     },
     extraReducers: (builder) => {   
         builder
@@ -97,6 +102,8 @@ export const userSlice = createSlice({
 });
 
 export const {reset }  = userSlice.actions;
+
+export const {resetisvalid }  = userSlice.actions;
 
 
 export default userSlice.reducer;

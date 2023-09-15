@@ -8,9 +8,10 @@ import { useNavigate } from "react-router-dom";
 import {Link} from 'react-router-dom';
 import * as formik from 'formik';
 import * as yup from 'yup';
-import {validateUser} from "../store/reducers/userSlice"
+import {reset,resetisvalid, validateUser} from "../store/reducers/userSlice"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
+
 
 function Login() {
   //navigate path
@@ -21,11 +22,21 @@ function Login() {
   
   //validation
   const isvalidUser=useSelector(store=>store?.user?.isvalidUser);
-// console.log(isvalidUser);
+console.log(isvalidUser);
+
   useEffect(()=>{
  if(isvalidUser)
  Navigate("/Dashboard")
+
+
   },[isvalidUser]);
+ 
+  useEffect(()=>{
+ dispatch(resetisvalid());
+
+Navigate("/");
+  },[]);
+ 
   useEffect(()=>{
  if(isvalidUser===false)
    document.getElementById("log-in-msg-wrg-id-pass").innerHTML="The email-id and password you entered did not match out record. please double-check and try again"
@@ -48,7 +59,10 @@ const schema = yup.object().shape({
     validationSchema={schema}
     onSubmit={
       (values, { setSubmitting }) => {
-        dispatch(validateUser({email:values.email,pwd:values.pwd}));                     
+        sessionStorage.setItem("mydata",values.email);
+        // console.log(values.email)
+        dispatch(validateUser({email:values.email,pwd:values.pwd}));  
+                         
       }
       }
    
