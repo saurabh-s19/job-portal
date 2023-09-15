@@ -59,8 +59,10 @@ const schema = yup.object().shape({
     validationSchema={schema}
     onSubmit={
       (values, { setSubmitting }) => {
-        sessionStorage.setItem("mydata",values.email);
+        sessionStorage.setItem("myemail",values.email);
+        
         // console.log(values.email)
+      
         dispatch(validateUser({email:values.email,pwd:values.pwd}));  
                          
       }

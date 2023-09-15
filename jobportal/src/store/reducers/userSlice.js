@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { API_URL ,JOB_RECRUITER, JOB_SEEKER} from "../../utils/constants.js";
 
@@ -84,8 +84,11 @@ export const userSlice = createSlice({
         .addCase(validateUser.fulfilled, (state, {payload})=> {
             state.isLoading = false;
             console.log(payload);
+            
             state.isvalidUser=payload?.status==="valid"?true:false;
             state.hasRecruiter=payload?.type===JOB_RECRUITER?true:false;
+            const isRecruiter=state.hasRecruiter?true:false;
+            localStorage.setItem('mydata1', isRecruiter);
         })
         .addCase(profile.pending, (state)=> {
             state.isLoading = true;

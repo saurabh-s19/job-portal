@@ -58,3 +58,10 @@
   min-width: 70vw;
   max-width: 70vw;
 }
+
+#msg{
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+  color: yellow;
+}
