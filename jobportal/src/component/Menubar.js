@@ -21,17 +21,30 @@ function  Menubar () {
   const Navigate=useNavigate();
 
   
-  const alldata= JSON.parse(localStorage.getItem('mydata'));
-  console.log(alldata);
-  const hasRecruiter=alldata.type;
+  const alldata= (localStorage.getItem('mydata'));
+  if(alldata){
+    const data=(JSON.parse(alldata));
+    // console.log(data);
+  var hasRecruiter=data.type;
+  }
+  const type= (localStorage.getItem('istype'));
+  if(type){
+    const data=((type));
+    console.log(data);
+  var hasRecruiter=data.type;
+  }
+  
   console.log(hasRecruiter);
-  // const haslogin=JSON.parse(localStorage.getItem('mydata2'));
- 
-    //  console.log(hasRecruiter);
+  
  const randernav=()=>{
   const navItems=hasRecruiter? RECRUITER_MENU:SEEKER_MENU;
   console.log("nav", navItems);
   return navItems?.map(item=> <Nav.Link as={Link} to={item.path}>{item.name}</Nav.Link>)
+ }
+
+ const logout=()=>{
+  localStorage.clear();
+  Navigate("/");
  }
  
   
@@ -67,7 +80,7 @@ function  Menubar () {
               <Dropdown.Item   as={Link} to="/profile" >
                 Profile 
               </Dropdown.Item>
-              <Dropdown.Item  as={Link} to="/loginpage"   >
+              <Dropdown.Item  onClick={logout}   >
                  Logout
               </Dropdown.Item>
             </Dropdown.Menu>

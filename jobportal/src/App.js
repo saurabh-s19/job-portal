@@ -4,10 +4,22 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { JOB_RECRUITER } from './utils/constants';
 import { useSelector } from 'react-redux';
 function App() {
-  const alldata= JSON.parse(localStorage.getItem('mydata'));
-  const isRecruiter=alldata.type;
+  const alldata= (localStorage.getItem('mydata'));
+  const type= (localStorage.getItem('istype'));
+  if(alldata){
+    const  data = JSON.parse(alldata);
+    const isRecruiter=data.type;
 
-  const hasRecruiter=isRecruiter===JOB_RECRUITER?true:false;
+    var hasRecruiter=isRecruiter===JOB_RECRUITER?true:false;
+  }
+  if(type){
+    const  data =  (type);
+    console.log(data);
+    const isRecruiter=data;
+
+    var hasRecruiter=isRecruiter===JOB_RECRUITER?true:false;
+  }
+console.log(hasRecruiter);
   return (
 
  <>

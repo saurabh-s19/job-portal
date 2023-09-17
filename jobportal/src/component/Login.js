@@ -14,35 +14,26 @@ import { useEffect } from "react";
 
 
 function Login() {
-  //navigate path
+  
   const Navigate=useNavigate();
   function changepath(){
     Navigate("/register"); 
   }
   
   //validation
-  const isvalidUser=useSelector(store=>store?.user?.isvalidUser);
-console.log(isvalidUser);
+  var isvalidUser=localStorage.getItem('isvalid');
+  console.log("isvalidUser",isvalidUser); 
+
+
 
   useEffect(()=>{
  if(isvalidUser)
  Navigate("/Dashboard")
-
-
+else if(isvalidUser===false){
+  document.getElementById("log-in-msg-wrg-id-pass").innerHTML="The email-id and password you entered did not match out record. please double-check and try again"
+}
   },[isvalidUser]);
  
-  useEffect(()=>{
- dispatch(resetisvalid());
-
-Navigate("/");
-  },[]);
- 
-  useEffect(()=>{
- if(isvalidUser===false)
-   document.getElementById("log-in-msg-wrg-id-pass").innerHTML="The email-id and password you entered did not match out record. please double-check and try again"
- 
-  },[isvalidUser]);
-
 
   
 
@@ -59,11 +50,8 @@ const schema = yup.object().shape({
     validationSchema={schema}
     onSubmit={
       (values, { setSubmitting }) => {
-        sessionStorage.setItem("myemail",values.email);
-        
-        // console.log(values.email)
-      
-        dispatch(validateUser({email:values.email,pwd:values.pwd}));  
+    localStorage.setItem('mydata' ,JSON.stringify( values));  
+    dispatch(validateUser({email:values.email,pwd:values.pwd}));  
                          
       }
       }

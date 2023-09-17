@@ -4,7 +4,7 @@ import { API_URL ,JOB_RECRUITER, JOB_SEEKER} from "../../utils/constants.js";
 
 const initialState = {
     user:[],
-    
+    isvalidUser:"",
     isLoading: false, 
     hasRecruiter:false,
     doneRegister:false,
@@ -15,9 +15,7 @@ const initialState = {
     companyName:""
 }
 
-const initialState1={
-    isvalidUser:"",
-}
+
 
 export const users = createAsyncThunk("users/create",async(params, thunkAPI)=>{
 
@@ -55,7 +53,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         reset: ()=> initialState,
-        resetisvalid:()=>initialState1,
+      
     },
     extraReducers: (builder) => {   
         builder
@@ -83,9 +81,11 @@ export const userSlice = createSlice({
         })
         .addCase(validateUser.fulfilled, (state, {payload})=> {
             state.isLoading = false;
-            console.log(payload);
+            
             
             state.isvalidUser=payload?.status==="valid"?true:false;
+            localStorage.setItem('isvalid',state.isvalidUser);
+            localStorage.setItem('istype', payload.type);
             state.hasRecruiter=payload?.type===JOB_RECRUITER?true:false;
             const isRecruiter=state.hasRecruiter?true:false;
             localStorage.setItem('mydata1', isRecruiter);
