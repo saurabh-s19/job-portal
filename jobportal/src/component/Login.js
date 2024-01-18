@@ -10,29 +10,23 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import {reset,resetisvalid, validateUser} from "../store/reducers/userSlice"
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from "react";
-
+import { useEffect  } from "react";
+import { useState } from "react";
 
 function Login() {
   
   const Navigate=useNavigate();
-  function changepath(){
-    Navigate("/register"); 
-  }
+  const isvalidUser = useSelector(state => state?.user?.isvalidUser);
   
-  //validation
-  var isvalidUser=localStorage.getItem('isvalid');
-  console.log("isvalidUser",isvalidUser); 
+  useEffect(()=> {
+    if(isvalidUser){
+      Navigate("/Dashboard")
+    }
+    
+  },[isvalidUser])
+   
 
 
-
-  useEffect(()=>{
- if(isvalidUser)
- Navigate("/Dashboard")
-else if(isvalidUser===false){
-  document.getElementById("log-in-msg-wrg-id-pass").innerHTML="The email-id and password you entered did not match out record. please double-check and try again"
-}
-  },[isvalidUser]);
  
 
   
@@ -50,9 +44,8 @@ const schema = yup.object().shape({
     validationSchema={schema}
     onSubmit={
       (values, { setSubmitting }) => {
-    localStorage.setItem('mydata' ,JSON.stringify( values));  
-    dispatch(validateUser({email:values.email,pwd:values.pwd}));  
-                         
+    dispatch(validateUser({email:values.email,pwd:values.pwd})); 
+      
       }
       }
    
@@ -91,7 +84,7 @@ const schema = yup.object().shape({
                 <Form.Group className="mb-3" controlId="formBasicCheckbox" >
                   <Form.Check type="checkbox" label="Check me out"  required/>
                 </Form.Group>
-             <Link  onClick={changepath}>Don't have a account? register now</Link>  <br/><br/>
+             <Link  onClick={()=>Navigate("/register")}>Don't have a account? register now</Link>  <br/><br/>
 
                 <Button variant="primary" type="submit" >
                   Submit

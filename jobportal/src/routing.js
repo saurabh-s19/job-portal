@@ -26,10 +26,6 @@ const COMMON_ROUTES = [
     path: "/register",
     element: <Register />
   },
-  {
-    path: "/loginpage",
-    element: <LoginPage/>
-  }
  
 ];
 
@@ -41,7 +37,7 @@ export const SEEKER_ROUTES = [
     element: <Jobs />
   },
 
-  {
+  { 
     path: "/appliedjob",
     element: <Appliedjob />
   }
@@ -50,12 +46,12 @@ export const SEEKER_ROUTES = [
 export const RECRUITER_ROUTES = [
   ...COMMON_ROUTES,
   {
-    path: "/postajob",
+    path: "/postajob",                  
     element: <Postajob />
   },
   {
-    path: "/postedjob",
-    element: <Postedjob />
+    path: "/postedjob",                   
+    element: <Postedjob />                   
   }
 ];
 

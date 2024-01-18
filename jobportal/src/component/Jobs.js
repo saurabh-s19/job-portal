@@ -4,16 +4,16 @@ import Button from 'react-bootstrap/Button';
 import { Container, Form, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllJobs, reset } from '../store/reducers/jobSlice';
+import { useNavigate } from "react-router-dom";
 
 
 function Jobs(){
+  const Navigate=useNavigate();
+  const dispatch = useDispatch(); 
+  const jobs = useSelector(state => state?.job?.jobs);            
+   
 
-  
-
-  const jobs = useSelector(state => state?.job?.jobs);            // access the state which is in store
-  const dispatch = useDispatch();               // we want to perform change in state which is in store
-  console.log("jobs", jobs)
-  useEffect(()=> {                 // if you want to  perform more action after rendering component 
+  useEffect(()=> {               
     dispatch(getAllJobs());
   },[])
   
@@ -22,7 +22,8 @@ function Jobs(){
       dispatch(reset())
     }
   },[])
- console.log(jobs);
+
+
    const renderJobs = () => {
     return jobs.map(job => {
       const {JobTitle, maxSalary, description} = job;

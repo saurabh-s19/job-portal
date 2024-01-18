@@ -1,9 +1,12 @@
 import { Row, Col } from "react-bootstrap";
  import {Card } from "react-bootstrap";
 import { Container} from 'react-bootstrap';
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
    
 export default function AppliedJob() {
+  const Navigate=useNavigate();
+
   return (
     <Container>
       <Row>

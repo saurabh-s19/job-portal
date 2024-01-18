@@ -2,17 +2,20 @@ import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { API_URL ,JOB_RECRUITER, JOB_SEEKER} from "../../utils/constants.js";
 
+  
 const initialState = {
     user:[],
-    isvalidUser:"",
+    isvalidUser:localStorage.getItem('isValidOrNot')!==null?JSON.parse(localStorage.getItem('isValidOrNot')):"",
     isLoading: false, 
-    hasRecruiter:false,
+    hasRecruiter:localStorage.getItem('isRecruiterOrNot')!==null?JSON.parse(localStorage.getItem('isRecruiterOrNot')):"",
     doneRegister:false,
-    userExist:false,
-    emailId:"",
+    userExist:"",
+    emailId:localStorage.getItem('emailId')!==null?JSON.parse(localStorage.getItem('emailId')):"",
     firstName:"",
     LastName:"",
-    companyName:""
+    companyName:"",
+    
+    
 }
 
 
@@ -52,7 +55,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        reset: ()=> initialState,
+        reset: ()=> initialState
       
     },
     extraReducers: (builder) => {   
@@ -64,13 +67,16 @@ export const userSlice = createSlice({
             state.isLoading = false;
         })
         .addCase(users.fulfilled, (state, {payload})=>{
-            state.isLoading = false;
+            const { emailId } = payload.data;
+            state.isLoading = false; 
             state.doneRegister=true;
-            console.log("payload", payload);
-            state.emailId=payload.data.data.emailId;
-            
-            //  console.log("payload", payload.data.msg);
-            state.userExist=payload?.data.msg==="already exist"?true:false;
+             console.log("inUserSlicePayloadType: ",payload?.data?.type);
+             console.log("inUserSlicePayload : ",payload);
+            state.hasRecruiter= payload?.data?.type===JOB_RECRUITER?true:false;
+            state.userExist=payload?.data.msg==="already exist"?true:false;    
+            localStorage.setItem('emailId',JSON.stringify(emailId));       
+            localStorage.setItem('isRecruiterOrNot',state.hasRecruiter);       
+            localStorage.setItem('isValidOrNot',!(state.userExist));      
            
         })
         .addCase(validateUser.pending, (state)=> {
@@ -81,14 +87,12 @@ export const userSlice = createSlice({
         })
         .addCase(validateUser.fulfilled, (state, {payload})=> {
             state.isLoading = false;
-            
-            
             state.isvalidUser=payload?.status==="valid"?true:false;
-            localStorage.setItem('isvalid',state.isvalidUser);
-            localStorage.setItem('istype', payload.type);
-            state.hasRecruiter=payload?.type===JOB_RECRUITER?true:false;
-            const isRecruiter=state.hasRecruiter?true:false;
-            localStorage.setItem('mydata1', isRecruiter);
+            state.hasRecruiter=payload?.type===JOB_RECRUITER?true:false;   
+            localStorage.setItem('isValidOrNot',JSON.stringify(state.isvalidUser));         
+            localStorage.setItem('isRecruiterOrNot', state.hasRecruiter);             
+            localStorage.setItem('emailId',JSON.stringify(payload?.emailId));
+            
         })
         .addCase(profile.pending, (state)=> {
             state.isLoading = true;

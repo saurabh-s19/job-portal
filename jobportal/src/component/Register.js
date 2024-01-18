@@ -8,10 +8,13 @@ import Col from "react-bootstrap/Col";
 import { Link, json } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { users } from "../store/reducers/userSlice"
+import { reset, users } from "../store/reducers/userSlice"
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -21,26 +24,25 @@ function Register() {
 const doneRegister=useSelector(state=>state?.user?.doneRegister);
 const userExist=useSelector(state=>state?.user?.userExist);
 const [isJobRecruiter, setIsJobRecruiter] = useState(false);
-console.log("userExist" ,userExist);
+
+
   function changepath() {
     Navigate("/");
   }
  
-  // useEffect(()=>{
-  //   if(doneRegister && userExist===false){
-  //     Navigate("/Dashboard");
-  //   }
 
-  // },[doneRegister , userExist]);
-  
-  useEffect(()=>{
-    if( userExist===true){
-  alert("already exist");
+  useEffect(()=>{  
+    if(doneRegister && !userExist){
+      toast.success("User Register successfully");
+      setTimeout(() => {
+       Navigate("/Dashboard");
+      }, 2000);
     }
-
-  },[ userExist]);
-
-
+     else if(userExist===true){
+         toast.error("User Already Exists");
+     }
+  },[doneRegister , userExist]);
+  
 
   const { Formik } = formik;
   const dispatch = useDispatch();
@@ -53,48 +55,15 @@ console.log("userExist" ,userExist);
   });
 
 
-
-  function handle() {
-    Navigate("Dashboard");
-  }
-
-  // function handleChange(event) {
-  //   console.log("helo");
-  //   const { name, value } = event.target;
-  //   if (name === "type" && value === "job recruiter") {
-  //     setIsJobRecruiter(true);
-  //     console.log("job recruiter");
-  //   } else {
-  //     setIsJobRecruiter(false);
-  //   }
-  //   // Handle other form field changes
-  //   // ...
-  // }
- 
-
   return (
     <Formik
       validationSchema={schema}
       onSubmit={
         (values, { setSubmitting }) => {
-          console.log(values);
-          localStorage.setItem('mydata', JSON.stringify(values) );
           dispatch(users(values));
-          Navigate("/Dashboard");
         }}
 
-        handleChange={
-          (e,{fun})=>{
-            console.log(e);
-            const { name, value } = e.target;
-    if (name === "type" && value === "job recruiter") {
-      setIsJobRecruiter(true);
-      console.log("job recruiter");
-    } else {
-      setIsJobRecruiter(false);
-    }
-          }
-        }
+    
 
 
       initialValues={{
@@ -173,6 +142,7 @@ console.log("userExist" ,userExist);
               </Card>
             </Col>
           </Row>
+          <ToastContainer />
         </Container>
       )
       }

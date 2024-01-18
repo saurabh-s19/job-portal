@@ -9,42 +9,42 @@ import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { RECRUITER_MENU, SEEKER_MENU } from '../utils/constants';
 import { Dropdown } from "react-bootstrap";
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { reset } from "../store/reducers/userSlice";
 
 
 function  Menubar () {
+  const dispatch=useDispatch();
   const [show, setShow] = useState(false);
   const target = useRef(null);
   const Navigate=useNavigate();
 
+    
+
+ 
+  const hasRecruiter = useSelector(state => state?.user?.hasRecruiter);
+ 
+ 
   
-  const alldata= (localStorage.getItem('mydata'));
-  if(alldata){
-    const data=(JSON.parse(alldata));
-    // console.log(data);
-  var hasRecruiter=data.type;
-  }
-  const type= (localStorage.getItem('istype'));
-  if(type){
-    const data=((type));
-    console.log(data);
-  var hasRecruiter=data.type;
-  }
   
-  console.log(hasRecruiter);
   
  const randernav=()=>{
   const navItems=hasRecruiter? RECRUITER_MENU:SEEKER_MENU;
-  console.log("nav", navItems);
+ 
   return navItems?.map(item=> <Nav.Link as={Link} to={item.path}>{item.name}</Nav.Link>)
  }
 
+ 
+
  const logout=()=>{
-  localStorage.clear();
+  localStorage.clear(); 
+  
+     dispatch(reset());
   Navigate("/");
+  window.location.reload();  
  }
  
   
@@ -85,15 +85,6 @@ function  Menubar () {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          
-        
-        
-        
-
-          
-  
-
-    
         </Navbar.Collapse>
       </Container>
     </Navbar>
