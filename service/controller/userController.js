@@ -52,7 +52,7 @@ return userModel.update(req.body.emailId,req.body)
       return userModel.hasvalidUser(email,pwd)
       .then((data)=> {
         if(data.length === 1){    
-          res.send({status: "valid", type: data?.[0]?.type});
+          res.send({status: "valid", type: data?.[0]?.type , emailId:data?.[0]?.emailId});
         }
         else{
           res.send({status: "invalid"});

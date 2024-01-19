@@ -12,6 +12,8 @@ import {reset,resetisvalid, validateUser} from "../store/reducers/userSlice"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect  } from "react";
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   
@@ -21,6 +23,9 @@ function Login() {
   useEffect(()=> {
     if(isvalidUser){
       Navigate("/Dashboard")
+    }
+    else if(isvalidUser===false){
+          toast.error("Email id and Password is not matched");
     }
     
   },[isvalidUser])
@@ -94,6 +99,7 @@ const schema = yup.object().shape({
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
     </Container>
       )
       }

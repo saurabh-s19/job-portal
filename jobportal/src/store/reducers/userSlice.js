@@ -67,14 +67,12 @@ export const userSlice = createSlice({
             state.isLoading = false;
         })
         .addCase(users.fulfilled, (state, {payload})=>{
-            const { emailId } = payload.data;
             state.isLoading = false; 
             state.doneRegister=true;
-             console.log("inUserSlicePayloadType: ",payload?.data?.type);
-             console.log("inUserSlicePayload : ",payload);
-            state.hasRecruiter= payload?.data?.type===JOB_RECRUITER?true:false;
+            state.emailId=payload?.data?.data?.emailId;
+            state.hasRecruiter= payload?.data?.data?.type===JOB_RECRUITER?true:false;
             state.userExist=payload?.data.msg==="already exist"?true:false;    
-            localStorage.setItem('emailId',JSON.stringify(emailId));       
+            localStorage.setItem('emailId',JSON.stringify(state.emailId));       
             localStorage.setItem('isRecruiterOrNot',state.hasRecruiter);       
             localStorage.setItem('isValidOrNot',!(state.userExist));      
            
@@ -87,6 +85,7 @@ export const userSlice = createSlice({
         })
         .addCase(validateUser.fulfilled, (state, {payload})=> {
             state.isLoading = false;
+            state.emailId=payload?.emailId;
             state.isvalidUser=payload?.status==="valid"?true:false;
             state.hasRecruiter=payload?.type===JOB_RECRUITER?true:false;   
             localStorage.setItem('isValidOrNot',JSON.stringify(state.isvalidUser));         
