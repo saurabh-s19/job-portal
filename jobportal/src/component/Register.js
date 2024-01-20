@@ -52,6 +52,7 @@ const [isJobRecruiter, setIsJobRecruiter] = useState(false);
     emailId: yup.string().required(),
     password: yup.string().required(),
     type: yup.string().required(),
+    companyName:yup.string()
   });
 
 
@@ -69,9 +70,8 @@ const [isJobRecruiter, setIsJobRecruiter] = useState(false);
       initialValues={{
         emailId: '',
         password: '',
-        type: ''
-
-
+        type: '',
+        companyName:' '
       }}
    
     >
@@ -99,6 +99,8 @@ const [isJobRecruiter, setIsJobRecruiter] = useState(false);
                       <Form.Control type="password" placeholder="Password" name="password" value={values.password}
                         onChange={handleChange} />
                     </Form.Group>
+                    <Row>
+                    <Col>
                     <Form.Check
                       inline
                       label="Job seeker"
@@ -108,6 +110,8 @@ const [isJobRecruiter, setIsJobRecruiter] = useState(false);
                       onChange={handleChange}
 
                     />
+                    </Col>
+                    <Col>
                     <Form.Check
                       inline
                       label="Job Recruiter"
@@ -115,23 +119,27 @@ const [isJobRecruiter, setIsJobRecruiter] = useState(false);
                       name="type"
                       value="job recruiter"
                       onChange={handleChange}
-                      
-                        
-
+                  
                     />
-                    {isJobRecruiter && (
-                      <Form.Group controlId="additionalInput">
-                        <Form.Label>Additional Input</Form.Label>
+                    </Col>
+                    
+                    {values.type==="job recruiter"  && (
+                      <Col>
+                      <Form.Group controlId="additionalInput" >
+                        <Form.Label>Company Name</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Enter additional information"
-                          name="additionalInfo"
-                          value={values.additionalInfo}
+                          placeholder="Company"
+                          name="companyName"
+                          value={values.companyName}
                           onChange={handleChange}
                         />
                       </Form.Group>
+                      </Col>
                     )}
-                    <br /> <br />  <Link onClick={changepath} >Have not log-in? Log-in now</Link> <br />  <br />
+                   
+                    </Row>
+                      <Link onClick={changepath} >Have not log-in? Log-in now</Link> <br />  <br />
 
 
 

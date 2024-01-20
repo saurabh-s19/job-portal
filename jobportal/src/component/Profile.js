@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
 import {  useSelector } from 'react-redux';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch} from 'react-redux';
 import { profile } from '../store/reducers/userSlice';
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,8 +21,7 @@ function Profile(){
   const [file, setFile] = useState(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-const formdata = new FormData();
+
   
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -41,11 +40,9 @@ const formdata = new FormData();
 
 formData.append('firstName', firstName);
 formData.append('lastName', lastName);
-formData.append('emailId', email);
+formData.append('emailId', emailId);
 
-for (const [key, value] of formData.entries()) {
-  console.log(`${key}: ${value}`);
-}
+
  dispatch(profile(formData));
    toast.success("Updated Successfully");
   }
@@ -55,7 +52,7 @@ for (const [key, value] of formData.entries()) {
   
     return ( <Container className='postdiv'>     
        <h1>Profile</h1>
-    <Form  onSubmit={handleSubmit}  encType='multipart/form-data'   >
+    <Form  onSubmit={handleSubmit} encType='multipart/form-data'   >
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>First Name</Form.Label>
         <Form.Control type="text" name="firstName"onChange={(e) => setFirstName(e.target.value)}  />

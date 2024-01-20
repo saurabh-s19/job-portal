@@ -5,7 +5,7 @@ const jobSchema=mongoose.Schema({
      maxSalary:String,
      companyName:String,
     recuriterDtl:{
-        name:String,
+        name:String, 
         emailId:String,
         contactNo:String
     }
@@ -16,7 +16,7 @@ const jobCollection=mongoose.model("job",jobSchema);
 module.exports={
     create:(fields)=>{
        const job=new jobCollection(fields);
-       console.log(job);
+       console.log(job);    
        return job.save();
     },
     getAll:()=>jobCollection.find(),
